@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+  </head>
 
+  <body>
+    <div id="app"></div>
+    <button id="btn">Conectar-se</button>
+
+    <script>
+      let btn = document.getElementById("btn");
+
+      let app = document.getElementById("app");
+
+      btn.addEventListener("pointerup", function(event) {
+        navigator.bluetooth
+          .requestDevice({
+            acceptAllDevices: true,
+            optionalServices: ["battery_service"]
+          })
+          .then(device => {
+            app.innerHTML = `Você está conectado a impressora!`;
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      });
+    </script>
+  </body>
+</html>
