@@ -6,14 +6,13 @@
   </head>
 
   <body>
-    <input type="text" id="texto" value="123" />
+    <input type="text" id="texto" value="" />
     <button id="btn">Imprimir</button>
 
     <script>
       let btn = document.getElementById("btn");
       let app = document.getElementById("app");
 
-      console.log(msg2);
       btn.addEventListener("pointerup", function(event) {
         navigator.bluetooth
           .requestDevice({
@@ -40,7 +39,7 @@
 
       function sendTextData() {
         // let msg = document.getElementById("texto").value;
-        let msg = document.getElementById("texto").value;
+        let msg = "123";
         // Get the bytes for the text
         let encoder = new TextEncoder("utf-8");
         // Add line feed + carriage return chars to text
