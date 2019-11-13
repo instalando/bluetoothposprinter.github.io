@@ -39,7 +39,7 @@
 
       function sendTextData() {
         // let msg = document.getElementById("texto").value;
-        let msg = "123";
+        let msg = document.getElementById("texto").value;
         // Get the bytes for the text
         let encoder = new TextEncoder("utf-8");
         // Add line feed + carriage return chars to text
