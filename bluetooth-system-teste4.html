@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <button id="btn">Conectar-se</button>
+
+    <script>
+      let btn = document.getElementById("btn");
+      let app = document.getElementById("app");
+      btn.addEventListener("pointerup", function(event) {
+        navigator.bluetooth
+          .requestDevice({
+            acceptAllDevices: true,
+            optionalServices: [
+              "000018f0-0000-1000-8000-00805f9b34fb",
+              "00002af1-0000-1000-8000-00805f9b34fb"
+            ]
+          })
+          .then(device => {
+            alert("> Found " + device.name);
+            alert("Connecting to GATT Server...");
+            return device.gatt.connect();
+          })
+          .then(server => server.getPrimaryService())
+          .then(service => service.getCharacteristic())
+          .then(characteristic => {
+            // Cache the characteristic
+            printCharacteristic = characteristic;
+            sendTextData();
+          })
+          .catch(handleError);
+      });
+
+      function sendTextData() {
+        // let msg = document.getElementById("texto").value;
+        let msg = "teste 4";
+        // Get the bytes for the text
+        let encoder = new TextEncoder("utf-8");
+        // Add line feed + carriage return chars to text
+        let text = encoder.encode(msg + "\u000A\u000D");
+        return printCharacteristic.writeValue(text).then(() => {
+          alert("Write done.");
+        });
+      }
+    </script>
+  </body>
+</html>
